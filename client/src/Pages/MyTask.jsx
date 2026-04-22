@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 import { motion } from "framer-motion";
-
+import Navbar from "../Components/Navbar";
+import Footer from "../Components/Footer";
 const MyTasks = ({ userData }) => {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
-    api
-      .get(`/my-tasks/${userData.email}`)
-      .then((res) => setTasks(res.data))
-      .catch(() => console.log("Error"));
-  }, []);
+    if (userData?.email) {
+      api
+        .get(`/my-tasks/${userData.email}`)
+        .then((res) => setTasks(res.data))
+        .catch(() => console.log("Error"));
+    }
+  }, [userData]);
 
   const updateStatus = (id, status) => {
     api.put(`/update-task/${id}`, { status }).then(() => {
