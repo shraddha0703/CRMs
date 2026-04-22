@@ -9,11 +9,11 @@ import VerifyOTP from "./Components/VerifyOTP";
 import MyTasks from "./Pages/MyTask";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import Navbar from "./Components/Navbar";
+import TaskManage from "./Pages/TaskManage";
 
 function App() {
   return (
     <>
-      
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Register />} />
@@ -30,7 +30,14 @@ function App() {
               </ProtectedRoute>
             }
           />
-
+          <Route
+            path="/ManageTask"
+            element={
+              <ProtectedRoute allowedRoles={["Admin"]}>
+                <TaskManage />
+              </ProtectedRoute>
+            }
+          />
           {/* ✅ USER ONLY */}
           <Route
             path="/Userdashboard"
@@ -47,9 +54,7 @@ function App() {
                 <MyTasks />
               </ProtectedRoute>
             }
-
           />
-         
 
           <Route path="/verify-otp" element={<VerifyOTP />} />
         </Routes>

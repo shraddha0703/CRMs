@@ -76,9 +76,9 @@ function Navbar() {
   const role = localStorage.getItem("role");
 
   const adminMenu = [
-    { name: "Dashboard", path: "/" },
+    { name: "Dashboard", path: "/Admindashboard" },
     { name: "Leads", path: "/leads" },
-    { name: "Customers", path: "/customers" },
+    { name: "CustomersTask", path: "/ManageTask" },
     { name: "Reports", path: "/reports" },
     { name: "Settings", path: "/settings" },
   ];
