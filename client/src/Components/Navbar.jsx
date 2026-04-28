@@ -80,7 +80,7 @@ function Navbar() {
     { name: "Leads", path: "/leads" },
     { name: "CustomersTask", path: "/ManageTask" },
     { name: "Reports", path: "/reports" },
-    { name: "Settings", path: "/settings" },
+    { name: "Settings", path: "/Setting" },
   ];
 
   const userMenu = [

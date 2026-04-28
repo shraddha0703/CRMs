@@ -11,6 +11,7 @@ import ProtectedRoute from "./Components/ProtectedRoute";
 import Navbar from "./Components/Navbar";
 import TaskManage from "./Pages/TaskManage";
 import Calendar from "./Pages/Calender";
+import Setting from "./Pages/Setting";
 
 function App() {
   return (
@@ -36,6 +37,15 @@ function App() {
             element={
               <ProtectedRoute allowedRoles={["Admin"]}>
                 <TaskManage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/Setting"
+            element={
+              <ProtectedRoute allowedRoles={["Admin"]}>
+                <Setting />
               </ProtectedRoute>
             }
           />
