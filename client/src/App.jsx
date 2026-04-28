@@ -10,6 +10,7 @@ import MyTasks from "./Pages/MyTask";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import Navbar from "./Components/Navbar";
 import TaskManage from "./Pages/TaskManage";
+import Calendar from "./Pages/Calender";
 
 function App() {
   return (
@@ -52,6 +53,14 @@ function App() {
             element={
               <ProtectedRoute allowedRoles={["User"]}>
                 <MyTasks />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/Calender"
+            element={
+              <ProtectedRoute allowedRoles={["User"]}>
+                <Calendar />
               </ProtectedRoute>
             }
           />

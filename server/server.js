@@ -12,6 +12,7 @@ app.use("/", require("./Routes/ForgotPass"));
 app.use("/", require("./Routes/VerifyOTP"));
 app.use("/", require("./Routes/MyTasks"));
 app.use("/", require("./Routes/TaskManage"));
+app.use("/", require("./Routes/Calender"))
 
 app.listen(process.env.PORT, () => {
   console.log(`Server Running On PORT : ${process.env.PORT}`);

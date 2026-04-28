@@ -86,7 +86,7 @@ function Navbar() {
   const userMenu = [
     { name: "Dashboard", path: "/Userdashboard" },
     { name: "My Tasks", path: "/Mytasks" },
-    { name: "Calendar", path: "/calendar" },
+    { name: "Calendar", path: "/Calender" },
     { name: "Deals", path: "/deals" },
   ];
 
