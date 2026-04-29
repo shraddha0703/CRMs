@@ -77,12 +77,12 @@ function Admindashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 text-black dark:text-white">
-      
+    <div className="min-h-screen bg-white dark:bg-gray-900 text-black dark:text-white ">
+     
       <div className="min-h-screen flex flex-col ">
       {/* <Navbar /> */}
-      <Navbar />
-
+     
+  <Navbar />
     
         {/* Sidebar */}
 
@@ -109,7 +109,7 @@ function Admindashboard() {
           </div>
 
           {/* Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 cu">
             {cards.map((card, index) => (
               <motion.div
                 key={index}
@@ -117,6 +117,7 @@ function Admindashboard() {
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.2 }}
+                
                 className={`p-5 rounded-xl shadow-lg text-white ${card.color}`}
               >
                 <div className="text-3xl mb-3">{card.icon}</div>
@@ -134,7 +135,8 @@ function Admindashboard() {
           >
             <h2 className="text-xl font-bold mb-4 ">Recent Users</h2>
 
-            <table className="w-full text-left">
+            <table className="w-full
+             text-left">
               <thead>
                 <tr className="border-b">
                   <th className="p-2">ID</th>

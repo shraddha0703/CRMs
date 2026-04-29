@@ -40,23 +40,34 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db");
 
-// ✅ TEST ROUTE
+//  TEST ROUTE
 router.get("/test", (req, res) => {
-  res.send("✅ Task API Working");
+  res.send(" Task API Working");
 });
 
-// ✅ GET My Tasks
+//  GET My Tasks
 router.get("/my-tasks/:email", (req, res) => {
   const { email } = req.params;
 
   console.log("Fetching tasks for:", email);
 
+  // const sql = `
+  //   SELECT * FROM tasks
+  //   WHERE LOWER(assigned_to) = LOWER(?)
+  //   ORDER BY id DESC
+  // `;
   const sql = `
-    SELECT * FROM tasks 
-    WHERE LOWER(assigned_to) = LOWER(?) 
-    ORDER BY id DESC
-  `;
-
+  SELECT 
+    id,
+    task_title,
+    status,
+    assigned_to,
+    DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') AS created_at,
+    DATE_FORMAT(updated_at, '%Y-%m-%d %H:%i:%s') AS updated_at
+  FROM tasks 
+  WHERE LOWER(assigned_to) = LOWER(?) 
+  ORDER BY updated_at DESC
+`;
   db.query(sql, [email], (err, results) => {
     if (err) {
       console.error("GET TASK ERROR:", err);
@@ -68,7 +79,7 @@ router.get("/my-tasks/:email", (req, res) => {
   });
 });
 
-// ✅ UPDATE Task Status
+//  UPDATE Task Status
 router.put("/update-task/:id", (req, res) => {
   const { id } = req.params;
   const { status } = req.body;

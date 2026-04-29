@@ -77,7 +77,17 @@ import { motion } from "framer-motion";
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
 
+
 const MyTasks = () => {
+  const formatDateIST = (dateString) => {
+  return new Date(dateString).toLocaleString("en-IN", {
+    timeZone: "Asia/Kolkata",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+   
+  });
+};
   const [tasks, setTasks] = useState([]);
 
   const user = JSON.parse(localStorage.getItem("user"));
@@ -133,11 +143,11 @@ const MyTasks = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
                   whileHover={{ scale: 1.03 }}
-                  className=" p-5 rounded-xl shadow-md"
+                  className=" p-5 bg-white rounded-xl shadow-md"
                 >
                   {/* TITLE + PRIORITY */}
-                  <div className="flex justify-between items-center">
-                    <h3 className="font-bold text-lg ">{task.task_title}</h3>
+                  <div className="flex justify-between items-center ">
+                    <h3 className="font-bold text-black text-lg ">{task.task_title}</h3>
 
                     <span
                       className={`text-xs px-2 py-1 rounded-full ${
@@ -162,7 +172,7 @@ const MyTasks = () => {
                   </p>
 
                   <p className="text-xs text-gray-400 mt-1">
-                    Due: {task.due_date}
+                    Due: {formatDateIST(task.due_date)}
                   </p>
 
                   {/* STATUS */}

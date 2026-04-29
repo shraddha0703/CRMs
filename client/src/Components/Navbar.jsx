@@ -77,7 +77,7 @@ function Navbar() {
 
   const adminMenu = [
     { name: "Dashboard", path: "/Admindashboard" },
-    { name: "Leads", path: "/leads" },
+    { name: "Leads", path: "/Leads" },
     { name: "CustomersTask", path: "/ManageTask" },
     { name: "Reports", path: "/reports" },
     { name: "Settings", path: "/Setting" },
@@ -94,7 +94,7 @@ function Navbar() {
 
   return (
     <motion.nav
-      className="bg-black text-white p-4 flex gap-6"
+      className="bg-black  text-white p-4 flex gap-6"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >

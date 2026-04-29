@@ -13,6 +13,9 @@ import TaskManage from "./Pages/TaskManage";
 import Calendar from "./Pages/Calender";
 import Setting from "./Pages/Setting";
 
+import Leads from "./Pages/Leads";
+
+
 function App() {
   return (
     <>
@@ -22,6 +25,7 @@ function App() {
           <Route path="/Login" element={<Login />} />
           <Route path="/ForgotPassword" element={<ForgotPassword />} />
           <Route path="/Navbar" element={<Navbar />} />
+          
 
           {/* ✅ ADMIN ONLY */}
           <Route
@@ -49,6 +53,19 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          <Route
+            path="/Leads"
+            element={
+              <ProtectedRoute allowedRoles={["Admin"]}>
+                <Leads />
+              </ProtectedRoute>
+            }
+          />
+
+          
+        
+
           {/* ✅ USER ONLY */}
           <Route
             path="/Userdashboard"

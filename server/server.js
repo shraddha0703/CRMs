@@ -14,6 +14,7 @@ app.use("/", require("./Routes/MyTasks"));
 app.use("/", require("./Routes/TaskManage"));
 app.use("/", require("./Routes/Calender"));
 app.use("/", require("./Routes/FetchUsers"));
+app.use("/", require("./Routes/Leads"));
 
 app.listen(process.env.PORT, () => {
   console.log(`Server Running On PORT : ${process.env.PORT}`);

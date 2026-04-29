@@ -22,7 +22,7 @@
 // router.post("/verify-otp", (req, res) => {
 //   const { email, otp } = req.body;
 
-//   // 1️⃣ Get OTP from Verify_OTP table
+//   // 1️ Get OTP from Verify_OTP table
 //   const sql = `SELECT * FROM Verify_OTP WHERE email = ?`;
 
 //   db.query(sql, [email], (err, results) => {
@@ -44,7 +44,7 @@
 //       return res.status(400).json({ message: "OTP expired" });
 //     }
 
-//     // 2️⃣ Update user/admin table
+//     // 2️ Update user/admin table
 //     const tableName = record.role === "Admin" ? "admin" : "users";
 
 //     const updateUser = `UPDATE ${tableName} SET is_verified = true WHERE email = ?`;
@@ -52,7 +52,7 @@
 //     db.query(updateUser, [email], (err2) => {
 //       if (err2) return res.status(500).json({ message: "Update failed" });
 
-//       // 3️⃣ Delete OTP after success
+//       // 3️ Delete OTP after success
 //       const deleteOtp = `DELETE FROM Verify_OTP WHERE email = ?`;
 //       db.query(deleteOtp, [email]);
 

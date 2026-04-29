@@ -31,17 +31,17 @@ const TaskManage = () => {
     // ✅ Get admin from localStorage
     const admin = JSON.parse(localStorage.getItem("admin"));
 
-    console.log("Admin:", admin); // 🔍 debug
+    console.log("Admin:", admin); 
 
     try {
       const res = await axios.post("http://localhost:8000/create-task", {
         ...form,
-        created_by: admin?.email, // ✅ now defined
+        created_by: admin?.email, // defined
       });
 
       console.log("SUCCESS:", res.data);
 
-      alert("✅ Task Assigned Successfully");
+      alert("Task Assigned Successfully");
 
       setForm({
         task_title: "",
@@ -55,7 +55,7 @@ const TaskManage = () => {
       console.log("FULL ERROR:", err);
       console.log("BACKEND ERROR:", err.response?.data);
 
-      alert(err.response?.data?.message || "❌ Error creating task");
+      alert(err.response?.data?.message || " Error creating task");
     }
 
     setLoading(false);
@@ -89,7 +89,7 @@ const TaskManage = () => {
               placeholder="Task Title"
               value={form.task_title}
               onChange={handleChange}
-              className="w-full  border p-2 rounded"
+              className="w-full text-black border p-2 rounded"
             />
 
             {/* Customer */}
@@ -99,7 +99,7 @@ const TaskManage = () => {
               placeholder="Customer Name"
               value={form.customer_name}
               onChange={handleChange}
-              className="w-full border p-2 rounded"
+              className="w-full text-black  border p-2 rounded"
             />
 
             {/* Task Type */}
@@ -107,7 +107,7 @@ const TaskManage = () => {
               name="task_type"
               value={form.task_type}
               onChange={handleChange}
-              className="w-full border p-2 rounded"
+              className="w-full  text-black  border p-2 rounded"
             >
               <option value="">Select Task Type</option>
               <option value="Call">Call</option>
@@ -120,7 +120,7 @@ const TaskManage = () => {
               name="priority"
               value={form.priority}
               onChange={handleChange}
-              className="w-full border p-2 rounded"
+              className="w-full text-black  border p-2 rounded"
             >
               <option value="">Select Priority</option>
               <option value="High">High</option>
@@ -134,7 +134,7 @@ const TaskManage = () => {
               name="due_date"
               value={form.due_date}
               onChange={handleChange}
-              className="w-full border p-2 rounded"
+              className="w-full text-black  border p-2 rounded"
             />
 
             {/* Assign To */}
@@ -144,7 +144,7 @@ const TaskManage = () => {
               placeholder="Assign to (user email)"
               value={form.assigned_to}
               onChange={handleChange}
-              className="w-full border p-2 rounded"
+              className="w-full text-black  border p-2 rounded"
             />
 
             {/* Button */}
