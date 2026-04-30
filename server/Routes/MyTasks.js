@@ -51,23 +51,11 @@ router.get("/my-tasks/:email", (req, res) => {
 
   console.log("Fetching tasks for:", email);
 
-  // const sql = `
-  //   SELECT * FROM tasks
-  //   WHERE LOWER(assigned_to) = LOWER(?)
-  //   ORDER BY id DESC
-  // `;
   const sql = `
-  SELECT 
-    id,
-    task_title,
-    status,
-    assigned_to,
-    DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') AS created_at,
-    DATE_FORMAT(updated_at, '%Y-%m-%d %H:%i:%s') AS updated_at
-  FROM tasks 
-  WHERE LOWER(assigned_to) = LOWER(?) 
-  ORDER BY updated_at DESC
-`;
+    SELECT * FROM tasks
+    WHERE LOWER(assigned_to) = LOWER(?)
+    ORDER BY id DESC
+  `;  
   db.query(sql, [email], (err, results) => {
     if (err) {
       console.error("GET TASK ERROR:", err);

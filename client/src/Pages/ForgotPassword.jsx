@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
-
+import { Link } from "react-router-dom";
 function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -48,73 +48,85 @@ function ForgotPassword() {
       alert(err.response?.data?.message || "Server error");
     }
   };
-const isFormValid = email.trim() !== "" && password.trim() !== "";
-  return (
+  const isFormValid = email.trim() !== "" && password.trim() !== "";
+  return(
+  <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-300 via-red-700 to-pink-300">
     <motion.div
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 1.0 }}
+      initial={{ opacity: 0, scale: 0.8, y: 50 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      className="backdrop-blur-xl bg-white/10 border border-white/20 shadow-2xl rounded-2xl p-8 w-full max-w-md text-white"
     >
-      <div className="flex items-center justify-center h-screen bg-white-400">
-        <div className="bg-white p-6 rounded-lg shadow-lg w-80">
-          <h2 className="text-xl font-bold mb-4 text-center">
-            Change Password
-          </h2>
+      {/* Heading */}
+      <h2 className="text-2xl font-bold text-center mb-6">Reset Password 🔐</h2>
 
-          {/* Email */}
-          <input
-            type="email"
-            placeholder="Enter Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="border p-2 mb-3 w-full rounded"
-          />
+      {/* Email */}
+      <input
+        type="email"
+        placeholder="Enter Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        className="w-full mb-4 p-3 rounded-lg bg-white/20 placeholder-gray-200 outline-none focus:ring-2 focus:ring-yellow-300 transition"
+      />
 
-          {/* Password */}
-          <input
-            type="password"
-            placeholder="New Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="border p-2 mb-3 w-full rounded"
-          />
+      {/* New Password */}
+      <input
+        type="password"
+        placeholder="New Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        className="w-full mb-4 p-3 rounded-lg bg-white/20 placeholder-gray-200 outline-none focus:ring-2 focus:ring-yellow-300 transition"
+      />
 
-          {/* Confirm Password */}
-          <input
-            type="password"
-            placeholder="Confirm Password"
-            value={confirmpassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            className="border p-2 mb-3 w-full rounded"
-          />
+      {/* Confirm Password */}
+      <input
+        type="password"
+        placeholder="Confirm Password"
+        value={confirmpassword}
+        onChange={(e) => setConfirmPassword(e.target.value)}
+        className="w-full mb-4 p-3 rounded-lg bg-white/20 placeholder-gray-200 outline-none focus:ring-2 focus:ring-yellow-300 transition"
+      />
 
-          {/* Role Selection */}
-          <select
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-            className="border p-2 mb-4 w-full rounded"
-          >
-            <option value="">Select Role</option>
-            <option value="Admin">Admin</option>
-            <option value="User">User</option>
-          </select>
+      {/* Role Selection */}
+      <select
+        value={role}
+        onChange={(e) => setRole(e.target.value)}
+        className="w-full mb-5 p-3 rounded-lg bg-white/20 text-white outline-none focus:ring-2 focus:ring-yellow-300"
+      >
+        <option className="text-black" value="">
+          Select Role
+        </option>
+        <option className="text-black" value="Admin">
+          Admin
+        </option>
+        <option className="text-black" value="User">
+          User
+        </option>
+      </select>
 
-          {/* Button */}
-          <button
-            onClick={handleSubmit}
-           // className="bg-blue-500 hover:bg-blue-600 text-white p-2 w-full rounded"
-           disabled={!isFormValid}
-            className={`p-2 w-full rounded text-white ${
-              isFormValid
-                ? "bg-blue-500 hover:bg-blue-600"
-                : "bg-gray-400 cursor-not-allowed"
-            }`}
-          >
-            Update Password
-          </button>
-        </div>
+      {/* Button */}
+      <motion.button
+        whileTap={{ scale: 0.95 }}
+        whileHover={{ scale: isFormValid ? 1.05 : 1 }}
+        onClick={handleSubmit}
+        disabled={!isFormValid}
+        className={`w-full p-3 rounded-lg font-semibold transition ${
+          isFormValid
+            ? "bg-gradient-to-r from-yellow-400 to-red-500 hover:opacity-90 shadow-lg"
+            : "bg-gray-400 cursor-not-allowed"
+        }`}
+      >
+        Update Password
+      </motion.button>
+
+      {/* Back to Login */}
+      <div className="text-center mt-5 text-sm text-gray-200">
+        <Link to="/Login" className="hover:underline hover:text-white">
+          Back to Login
+        </Link>
       </div>
     </motion.div>
+  </div>
   );
 }
 

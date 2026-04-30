@@ -12,8 +12,9 @@ import Navbar from "./Components/Navbar";
 import TaskManage from "./Pages/TaskManage";
 import Calendar from "./Pages/Calender";
 import Setting from "./Pages/Setting";
-
+import Deals from "./Pages/Deals";
 import Leads from "./Pages/Leads";
+import Reports from "./Pages/Reports";
 
 
 function App() {
@@ -62,7 +63,15 @@ function App() {
               </ProtectedRoute>
             }
           />
-
+         
+           <Route
+            path="/Reports"
+            element={
+              <ProtectedRoute allowedRoles={["Admin"]}>
+                <Reports/>
+              </ProtectedRoute>
+            }
+          />
           
         
 
@@ -88,6 +97,15 @@ function App() {
             element={
               <ProtectedRoute allowedRoles={["User"]}>
                 <Calendar />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/Deals"
+            element={
+              <ProtectedRoute allowedRoles={["User"]}>
+                <Deals/>
               </ProtectedRoute>
             }
           />

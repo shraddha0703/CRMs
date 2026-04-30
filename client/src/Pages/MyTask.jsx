@@ -78,6 +78,7 @@ import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
 
 
+
 const MyTasks = () => {
   const formatDateIST = (dateString) => {
   return new Date(dateString).toLocaleString("en-IN", {
@@ -122,7 +123,7 @@ const MyTasks = () => {
             animate={{ opacity: 1, y: 0 }}
             className="text-3xl font-bold text-center mb-8"
           >
-            My CRM Tasks
+            My  Tasks
           </motion.h2>
 
           {/* EMPTY STATE */}
@@ -204,7 +205,7 @@ const MyTasks = () => {
                           : "bg-gray-300 cursor-not-allowed"
                       }`}
                     >
-                      ▶ Start
+                     ▶ Start
                     </motion.button>
 
                     {/* DONE */}

@@ -1,4 +1,3 @@
-
 const express = require("express");
 const router = express.Router();
 const db = require("../db");
@@ -43,20 +42,6 @@ router.post("/create-task", (req, res) => {
         return res.status(500).json({ message: "Task creation failed" });
       }
 
-      // ✅ OPTIONAL: Notification insert (safe inside success)
-      // const notificationSql = `
-      //   INSERT INTO notifications (user_email, message)
-      //   VALUES (?, ?)
-      // `;
-
-      // const msg = `New task assigned: ${task_title}`;
-
-      // db.query(notificationSql, [assigned_to, msg], (nErr) => {
-      //   if (nErr) {
-      //     console.log("NOTIFICATION ERROR:", nErr);
-      //   }
-      // });
-
       res.json({
         message: "Task assigned successfully",
         taskId: result.insertId,
@@ -65,4 +50,16 @@ router.post("/create-task", (req, res) => {
   );
 });
 
+router.get("/task-count", (req, res) => {
+  const sql = `SELECT COUNT(*) AS total FROM tasks`;
+
+  db.query(sql, (err, result) => {
+    if (err) {
+      console.log("COUNT ERROR:", err);
+      return res.status(500).json({ message: "Error" });
+    }
+
+    res.json(result[0]); // { total: 25 }
+  });
+});
 module.exports = router;

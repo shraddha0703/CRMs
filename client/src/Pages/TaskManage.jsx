@@ -31,7 +31,7 @@ const TaskManage = () => {
     // ✅ Get admin from localStorage
     const admin = JSON.parse(localStorage.getItem("admin"));
 
-    console.log("Admin:", admin); 
+    console.log("Admin:", admin);
 
     try {
       const res = await axios.post("http://localhost:8000/create-task", {
@@ -78,9 +78,11 @@ const TaskManage = () => {
             onSubmit={handleSubmit}
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            className=" p-8 rounded-xl shadow-lg w-full max-w-lg space-y-4"
+            className=" bg-white dark:bg-gray-500 p-8 rounded-xl shadow-lg w-full max-w-lg space-y-4"
           >
-            <h2 className="text-2xl font-bold text-center">Create Task</h2>
+            <h2 className="text-2xl font-bold text-center text-black dark:text-white">
+              Create Task
+            </h2>
 
             {/* Task Title */}
             <input

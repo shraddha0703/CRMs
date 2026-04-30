@@ -3,6 +3,8 @@ import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { FaUser, FaTasks, FaChartLine, FaCalendarAlt } from "react-icons/fa";
 function Userdashboard() {
   const [user, setUser] = useState({});
@@ -12,22 +14,33 @@ function Userdashboard() {
     setUser(data);
     fetchTasks();
   }, []);
+  useEffect(() => {
+    if (user?.email) {
+      fetchTasks();
+    }
+  }, [user]);
 
   const fetchTasks = async () => {
     try {
-      const res = await fetch("http://localhost:8000//my-tasks/:email");
-      const data = await res.json();
-      setTasks(data);
+      if (user?.email) {
+        axios
+          .get(`http://localhost:8000/my-tasks/${user.email}`)
+          .then((res) => setTasks(res.data))
+          .catch((err) => console.log(err));
+      }
     } catch (error) {
       console.error("Error fetching tasks:", error);
     }
   };
+
+  const navigate = useNavigate();
   const cards = [
     {
       title: "My Tasks",
-      value: 2,
+      value: tasks.length,
       icon: <FaTasks size={24} />,
       color: "from-orange-500 to-red-700",
+      path: "/Mytasks",
     },
     {
       title: "Performance",
@@ -36,21 +49,22 @@ function Userdashboard() {
       color: "from-green-500 to-green-700",
     },
     {
-      title: "Meetings",
-      value: 1,
+      title: "Meetings And Calls",
+      value: tasks.length,
       icon: <FaCalendarAlt size={24} />,
       color: "from-purple-500 to-purple-700",
+      path: "/Mytasks",
     },
     {
       title: "Profile",
-      value: "Active",
+      value: user?.email ? "Active" : "N/A",
       icon: <FaUser size={24} />,
       color: "from-pink-500 to-pink-700",
     },
   ];
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 text-black dark:text-white">
+    <div className="min-h-screen bg-white dark:bg-gray-900 text-black dark:text-white ">
       <Navbar />
       {/* <motion.div
         className="bg-blue-500 w-32 h-32 "
@@ -67,7 +81,7 @@ function Userdashboard() {
         </div>
       </motion.div> */}
 
-      <div className="min-h-screen  text-white p-6">
+      <div className="min-h-screen flex-1 overflow-y-auto p-6  text-white p-6">
         {/* Welcome Card */}
         <motion.div
           initial={{ opacity: 0, y: -50 }}
@@ -92,6 +106,7 @@ function Userdashboard() {
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.2 }}
+              onClick={() => navigate(card.path)}
               className={`bg-gradient-to-r ${card.color} p-5 rounded-2xl shadow-lg cursor-pointer`}
             >
               <div className="flex justify-between items-center">
@@ -134,17 +149,6 @@ function Userdashboard() {
                       <span>
                         {task.status === "Completed" ? "✔" : "⏳"}{" "}
                         {task.task_title}
-                      </span>
-
-                      <span className="text-xs text-gray-300">
-                        {new Date(
-                          task.updated_at || task.created_at,
-                        ).toLocaleString("en-IN", {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                          day: "2-digit",
-                          month: "short",
-                        })}
                       </span>
                     </li>
                   ))

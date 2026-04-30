@@ -1,6 +1,6 @@
 function Footer() {
   return (
-    <footer className="bg-gray-800 text-white p-4 mt-auto">
+    <footer className="bg-gray-800 sticky bottom-0 z-50 text-white p-4 mt-auto">
       <div className="flex flex-col md:flex-row justify-between items-center">
         {/* Left */}
         <p className="text-sm">© 2026 CRM System. All rights reserved.</p>

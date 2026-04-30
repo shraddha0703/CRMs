@@ -1,5 +1,5 @@
 import React from "react";
- import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
 import Logout from "../Components/Logout";
@@ -7,6 +7,21 @@ import { motion } from "framer-motion";
 import { FaUsers, FaChartBar, FaTasks, FaCog } from "react-icons/fa";
 import axios from "axios";
 function Admindashboard() {
+  const [count, setCount] = useState(0);
+
+useEffect(() => {
+  fetchCount();
+}, []);
+
+const fetchCount = async () => {
+  try {
+    const res = await axios.get("http://localhost:8000/task-count");
+    setCount(res.data.total); // ✅ assign here
+  } catch (err) {
+    console.log(err);
+  }
+};
+ 
   const cards = [
     {
       title: "Leads",
@@ -16,12 +31,12 @@ function Admindashboard() {
     },
     {
       title: "CustomerTasks",
-      value: 45,
+      value: count,
       icon: <FaChartBar />,
       color: "bg-green-500",
     },
     { title: "Report", value: 78, icon: <FaTasks />, color: "bg-purple-500" },
-    { title: "Settings", value: 12, icon: <FaCog />, color: "bg-red-500" },
+    { title: "Settings", icon: <FaCog />, color: "bg-red-500" },
   ];
 
   const [users, setUsers] = useState([]);
@@ -30,6 +45,7 @@ function Admindashboard() {
     fetchUsers();
   }, []);
 
+ 
   //  Fetch Users
   const fetchUsers = async () => {
     try {
@@ -78,12 +94,11 @@ function Admindashboard() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 text-black dark:text-white ">
-     
       <div className="min-h-screen flex flex-col ">
-      {/* <Navbar /> */}
-     
-  <Navbar />
-    
+        {/* <Navbar /> */}
+
+        <Navbar />
+
         {/* Sidebar */}
 
         {/* <div className="w-64 bg-gray-900 text-white p-5">
@@ -117,7 +132,6 @@ function Admindashboard() {
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.2 }}
-                
                 className={`p-5 rounded-xl shadow-lg text-white ${card.color}`}
               >
                 <div className="text-3xl mb-3">{card.icon}</div>
@@ -135,15 +149,16 @@ function Admindashboard() {
           >
             <h2 className="text-xl font-bold mb-4 ">Recent Users</h2>
 
-            <table className="w-full
-             text-left">
+            <table
+              className="w-full
+             text-left"
+            >
               <thead>
                 <tr className="border-b">
                   <th className="p-2">ID</th>
                   <th className="p-2">Email</th>
                   <th className="p-2">Password</th>
-                   <th className="p-2">OTP Verified</th>
-                 
+                  <th className="p-2">OTP Verified</th>
                 </tr>
               </thead>
               <tbody>
@@ -152,8 +167,7 @@ function Admindashboard() {
                     <td className="p-2">{user.id}</td>
                     <td className="p-2">{user.email}</td>
                     <td className="p-2">{user.password}</td>
-                      <td className="p-2">{user.is_verified}</td>
-                   
+                    <td className="p-2">{user.is_verified}</td>
 
                     <td className="p-2">
                       <button
@@ -180,7 +194,6 @@ function Admindashboard() {
 
       <Footer />
     </div>
-    
   );
 }
 

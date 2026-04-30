@@ -79,7 +79,7 @@ function Navbar() {
     { name: "Dashboard", path: "/Admindashboard" },
     { name: "Leads", path: "/Leads" },
     { name: "CustomersTask", path: "/ManageTask" },
-    { name: "Reports", path: "/reports" },
+    { name: "Reports", path: "/Reports" },
     { name: "Settings", path: "/Setting" },
   ];
 
@@ -87,14 +87,14 @@ function Navbar() {
     { name: "Dashboard", path: "/Userdashboard" },
     { name: "My Tasks", path: "/Mytasks" },
     { name: "Calendar", path: "/Calender" },
-    { name: "Deals", path: "/deals" },
+    { name: "Deals", path: "/Deals" },
   ];
 
   const menuItems = role === "Admin" ? adminMenu : userMenu;
 
   return (
     <motion.nav
-      className="bg-black  text-white p-4 flex gap-6"
+      className="bg-black sticky top-0 z-50 text-white p-4 flex gap-6"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >
