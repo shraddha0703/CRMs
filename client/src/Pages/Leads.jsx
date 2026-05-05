@@ -83,8 +83,9 @@ function Leads() {
         </table>
       </div>
     </motion.div>
-    <Footer/>
+   
     </div>
+     <Footer/>
     </div>
   );
 }

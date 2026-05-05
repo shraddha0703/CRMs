@@ -140,7 +140,7 @@ function Navbar() {
               to={item.path}
               className={({ isActive }) =>
                 `relative px-2 py-1 transition-all duration-300 ${
-                  isActive ? "text-cyan-400" : "text-gray-600 hover:text-white  dark:text-white"
+                  isActive ? "text-cyan-400" : "text-gray-600  dark:text-white"
                 }`
               }
             >
