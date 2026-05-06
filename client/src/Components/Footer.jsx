@@ -9,7 +9,7 @@ function Footer() {
     >
       <div className="max-w-7xl mx-auto px-6 py-4 text-white flex flex-col md:flex-row justify-between items-center gap-3">
         {/* 🔹 Left */}
-        <p className="text-sm text-gray-300">
+        <p className="text-sm text-black dark:text-gray-300">
           © 2026 CRM System. All rights reserved.
         </p>
 
@@ -20,7 +20,7 @@ function Footer() {
               key={i}
               href="#"
               whileHover={{ scale: 1.1 }}
-              className="relative text-gray-300 hover:text-white transition"
+              className="relative text-black dark:text-gray-300 hover:text-cyan-400 transition"
             >
               {item}
 
@@ -31,7 +31,7 @@ function Footer() {
         </div>
 
         {/* 🔹 Right */}
-        <p className="text-sm text-gray-300">
+        <p className="text-sm text-black dark:text-gray-300">
           Developed by{" "}
           <span className="font-semibold text-cyan-400">Team Akshay</span>
         </p>
