@@ -1,120 +1,211 @@
 
-
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
-import { motion } from "framer-motion";
-import {
-  FaHandshake,
-  FaChartLine,
-  FaMoneyBillWave,
-  FaPlus,
-} from "react-icons/fa";
+
+import axios from "axios";
 
 function Deals() {
+  const [show, setShow] = useState(false);
+  const [deals, setDeals] = useState([]);
+
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  const [form, setForm] = useState({
+    title: "",
+    client_name: "",
+    company: "",
+    amount: "",
+    stage: "New",
+    close_date: "",
+    email: "",
+    phone: "",
+    notes: "",
+    user_email: user.email,
+  });
+
+  useEffect(() => {
+    fetchDeals();
+  }, []);
+
+  const fetchDeals = () => {
+    axios
+      .get(`http://localhost:8000/deals/${user.email}`)
+      .then((res) => setDeals(res.data));
+  };
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = () => {
+    axios.post("http://localhost:8000/adddeal", form).then((res) => {
+      alert("Deal Added");
+      setShow(false);
+      fetchDeals();
+    });
+  };
+
+  const revenue = deals.reduce((a, b) => a + Number(b.amount), 0);
+  const wonDeals = deals.filter((d) => d.stage === "Won").length;
+
   return (
     <div className="h-screen flex flex-col bg-gray-100 dark:bg-gray-900">
       <Navbar />
 
-      {/* Main Content */}
-      <div className="flex-1 overflow-y-auto p-6 md:px-10">
-        {/* Heading */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-800 dark:text-white">
-              My Deals
-            </h1>
-            <p className="text-gray-500 dark:text-gray-400 mt-1">
-              Manage your sales pipeline and track progress.
-            </p>
-          </div>
+      <div className="flex-1 p-6 overflow-auto">
+        <div className="flex justify-between mb-6">
+          <h1 className="text-3xl  text-black font-bold dark:text-white">My Deals</h1>
 
-          {/* Add Deal Button */}
-          <button className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-xl shadow-md transition">
-            <FaPlus />
+          <button
+            onClick={() => setShow(true)}
+            className="bg-blue-600 text-white px-5 py-2 rounded-lg"
+          >
             Add Deal
           </button>
         </div>
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          <motion.div
-            whileHover={{ scale: 1.03 }}
-            className="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-md"
-          >
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-500 dark:text-gray-400 text-sm">
-                  Total Deals
-                </p>
-                <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
-                  0
-                </h2>
-              </div>
-              <FaHandshake className="text-blue-500 text-3xl" />
-            </div>
-          </motion.div>
+        {/* Cards */}
 
-          <motion.div
-            whileHover={{ scale: 1.03 }}
-            className="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-md"
-          >
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-500 dark:text-gray-400 text-sm">
-                  Revenue
-                </p>
-                <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
-                  ₹0
-                </h2>
-              </div>
-              <FaMoneyBillWave className="text-green-500 text-3xl" />
-            </div>
-          </motion.div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+          <div className="bg-white p-5 rounded shadow">
+            <p>Total Deals</p>
+            <h2 className="text-2xl font-bold">{deals.length}</h2>
+          </div>
 
-          <motion.div
-            whileHover={{ scale: 1.03 }}
-            className="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-md"
-          >
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-500 dark:text-gray-400 text-sm">
-                  Won Deals
-                </p>
-                <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
-                  0
-                </h2>
-              </div>
-              <FaChartLine className="text-purple-500 text-3xl" />
-            </div>
-          </motion.div>
+          <div className="bg-white p-5 rounded shadow">
+            <p>Revenue</p>
+            <h2 className="text-2xl font-bold">₹{revenue}</h2>
+          </div>
+
+          <div className="bg-white p-5 rounded shadow">
+            <p>Won Deals</p>
+            <h2 className="text-2xl font-bold">{wonDeals}</h2>
+          </div>
         </div>
 
-        {/* Deals Table / Empty State */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-8 text-center"
-        >
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/4076/4076478.png"
-            alt="No Deals"
-            className="w-28 mx-auto mb-4 opacity-80"
-          />
+        {/* Table */}
 
-          <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">
-            No Deals Available
-          </h2>
+        <div className="bg-white rounded shadow p-4">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b">
+                <th>Deal</th>
+                <th>Client</th>
+                <th>Amount</th>
+                <th>Stage</th>
+                <th>Date</th>
+              </tr>
+            </thead>
 
-          <p className="text-gray-500 dark:text-gray-400 mb-5">
-            Start by creating your first deal and grow your business.
-          </p>
-
-          <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-xl transition shadow-md">
-            Create Deal
-          </button>
-        </motion.div>
+            <tbody>
+              {deals.map((d) => (
+                <tr key={d.id} className="text-center border-b">
+                  <td>{d.title}</td>
+                  <td>{d.client_name}</td>
+                  <td>₹{d.amount}</td>
+                  <td>{d.stage}</td>
+                  <td>{d.close_date}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
+
+      {/* Modal */}
+
+      {show && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-lg w-[500px]">
+            <h2 className="text-xl font-bold mb-4">Create Deal</h2>
+
+            <input
+              name="title"
+              placeholder="Deal Title"
+              onChange={handleChange}
+              className="border p-2 w-full mb-2"
+            />
+
+            <input
+              name="client_name"
+              placeholder="Client Name"
+              onChange={handleChange}
+              className="border p-2 w-full mb-2"
+            />
+
+            <input
+              name="company"
+              placeholder="Company"
+              onChange={handleChange}
+              className="border p-2 w-full mb-2"
+            />
+
+            <input
+              name="amount"
+              placeholder="Amount"
+              onChange={handleChange}
+              className="border p-2 w-full mb-2"
+            />
+
+            <select
+              name="stage"
+              onChange={handleChange}
+              className="border p-2 w-full mb-2"
+            >
+              <option>New</option>
+              <option>Proposal</option>
+              <option>Negotiation</option>
+              <option>Won</option>
+              <option>Lost</option>
+            </select>
+
+            <input
+              type="date"
+              name="close_date"
+              onChange={handleChange}
+              className="border p-2 w-full mb-2"
+            />
+
+            <input
+              name="email"
+              placeholder="Email"
+              onChange={handleChange}
+              className="border p-2 w-full mb-2"
+            />
+
+            <input
+              name="phone"
+              placeholder="Phone"
+              onChange={handleChange}
+              className="border p-2 w-full mb-2"
+            />
+
+            <textarea
+              name="notes"
+              placeholder="Notes"
+              onChange={handleChange}
+              className="border p-2 w-full mb-2"
+            />
+
+            <div className="flex justify-between">
+              <button
+                onClick={() => setShow(false)}
+                className="bg-gray-500 text-white px-4 py-2 rounded"
+              >
+                Close
+              </button>
+
+              <button
+                onClick={handleSubmit}
+                className="bg-blue-600 text-white px-4 py-2 rounded"
+              >
+                Save Deal
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <Footer />
     </div>
